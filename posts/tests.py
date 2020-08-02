@@ -21,14 +21,15 @@ class TestProfile(TestCase):
         )
 
     def test_profile(self):
-        response = self.client.get(reverse('sarah'))
+        response = self.client.get('/sarah/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['posts']), 1)
         self.assertIsInstance(response.context['author'], User)
         self.assertEqual(response.context['author'].username, self.user.username)
 
     def test_no_name(self):
-        response = self.client.post("/new/", data={'group': "None", 'text': "Lorem ipsum..."})
+        response = self.client.post("/new/", data={'group': "None",
+                                                   'text': "Lorem ipsum..."})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/auth/login/?next=/new/")
 
@@ -56,4 +57,3 @@ class TestProfile(TestCase):
 
     def tearDown(self) -> None:
         print('The end')
-
