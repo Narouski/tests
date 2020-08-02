@@ -21,7 +21,7 @@ class TestProfile(TestCase):
         )
 
     def test_profile(self):
-        response = self.client.get('/sarah/')
+        response = self.client.get(reverse('sarah'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['posts']), 1)
         self.assertIsInstance(response.context['author'], User)
