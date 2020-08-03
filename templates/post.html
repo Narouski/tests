@@ -33,7 +33,7 @@
         <div class='card mb-3 mt-1 shadow-sm'>
             <div class='card-body'>
                 <p class='card-text'>
-                    <a href="{% url 'profile' author.username %}"><strong class='d-block text-gray-dark'>{{ author.username }}</strong></a>
+                    <a href="{% url 'post' username=post.author.username post_id=post.id %}"><strong class='d-block text-gray-dark'>{{ author.username }}</strong></a>
                     {{ post.text|linebreaksbr }}
                 </p>
                 <hr>

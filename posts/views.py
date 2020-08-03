@@ -51,6 +51,7 @@ def profile(request, username):
 def post_view(request, username, post_id):
     post = get_object_or_404(Post, pk=post_id, author__username=username)
     author = post.author
+    post = Post.objects.get(id=post_id)
     return render(
         request,
         'post.html',
