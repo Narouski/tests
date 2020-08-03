@@ -21,15 +21,15 @@ class TestProfile(TestCase):
         )
 
     def test_profile(self):
-        response = self.client.get(reverse('profile', kwargs={'username': self.post.author}))
+        response = self.client.get(reverse('profile',
+                                           kwargs={'username': self.post.author}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['posts']), 1)
         self.assertIsInstance(response.context['author'], User)
         self.assertEqual(response.context['author'].username, self.user.username)
 
     def test_no_name(self):
-        response = self.client.post("/new/", data={'group': "None",
-                                                   'text': "test"})
+        response = self.client.post(reverse('new'), data={'text': 'test'})
         posts = Post.objects.all()
         for post in posts:
             self.assertNotEqual(post.text, "test")
