@@ -57,5 +57,25 @@ class TestProfile(TestCase):
             self.assertContains(response, post.text)
             self.assertContains(response, post.author)
 
+    def test_post_edit(self):
+        post = Post.objects.create(
+            text='old text in post',
+            author=self.user,
+        )
+        edit_urls_list = [reverse('index'),
+                          reverse('profile',
+                                  kwargs={'username': self.user.username}),
+                          reverse('post',
+                                  kwargs={'username': self.user.username,
+                                          'post_id': post.id})
+                          ]
+        for url in edit_urls_list:
+            new_text = 'This is text after edit.'
+            response = self.client.post(
+                url,
+                data={'text': new_text}
+            )
+            self.assertEqual(response.status_code, 200)
+
     def tearDown(self) -> None:
         print('The end')
