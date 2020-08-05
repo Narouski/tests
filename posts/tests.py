@@ -1,4 +1,4 @@
-from django.test import Client, TestCase
+from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 
 from .models import Post, User
@@ -95,3 +95,20 @@ class TestProfile(TestCase):
 
     def tearDown(self) -> None:
         print('The end')
+
+@override_settings(MEDIA_ROOT=tempfile.mkdtemp())
+def test_add_image(self):
+    text = 'post with file not image'
+    file_mock = mock.MagicMock(spec=File, name='copy.txt')
+    response = self.client_auth.post(reverse('new_post'), data={
+        'author': self.user,
+        'group': self.group.pk,
+        'text': text,
+        'image': file_mock
+        })
+    self.assertFormError(response,
+                         form='form',
+                         field='image',
+                         errors='Загрузите правильное изображение.'
+                                ' Файл, который вы загрузили,'
+                                ' поврежден или не является изображением.')
