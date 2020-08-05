@@ -28,7 +28,13 @@ class Post(models.Model):
         Group,
         on_delete=models.SET_NULL,
         related_name="posts",
-        blank=True, null=True
+        blank=True,
+        null=True
+    )
+    image = models.ImageField(
+        upload_to='posts/',
+        blank=True,
+        null=True
     )
 
     class Meta:

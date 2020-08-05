@@ -70,13 +70,12 @@ def post_edit(request, username, post_id):
         request.POST or None,
         files=request.FILES or None,
         instance=post)
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return redirect(
-                "post",
-                username=request.user.username,
-                post_id=post_id)
+    if form.is_valid():
+        form.save()
+        return redirect(
+            "post",
+            username=request.user.username,
+            post_id=post_id)
     return render(
         request,
         'post_new.html',
@@ -86,11 +85,23 @@ def post_edit(request, username, post_id):
 
 @login_required
 def new_post(request):
-    form = PostForm(request.POST or None)
-    if form.is_valid():
-        form.instance.author = request.user
-        form.save()
-        return redirect('index')
-    return render(request, "post_new.html", {"form": form})
-    form = PostForm()
-    return render(request, "post_new.html", {"form": form})
+    form = PostForm(request.POST or None, files=request.FILES or None)
+    if not form.is_valid():
+        return render(request, 'new.html', {'form': form})
+    post = form.save(commit=False)
+    post.author = request.user
+    post.save()
+    return redirect('index')
+
+
+def page_not_found(request, exception):
+    return render(
+        request,
+        "misc/404.html",
+        {"path": request.path},
+        status=404
+    )
+
+
+def server_error(request):
+    return render(request, "misc/500.html", status=500)

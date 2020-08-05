@@ -89,5 +89,9 @@ class TestProfile(TestCase):
             )
             self.assertEqual(response.status_code, 200)
 
+    def test_page_404(self):
+        test_page = self.client.get('/baba/', kwargs={'username': self.user.username})
+        self.assertEqual(test_page.status_code, 404)
+
     def tearDown(self) -> None:
         print('The end')

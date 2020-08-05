@@ -38,6 +38,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'users',
     'posts',
+    'sorl.thumbnail',
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django.contrib.admin',
@@ -130,6 +131,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Login
 LOGIN_URL = "/auth/login/"
