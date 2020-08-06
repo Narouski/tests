@@ -47,5 +47,10 @@ urlpatterns = [
         '500/',
         views.server_error,
         name='misc/500.html'
-    )
+    ),
+    path(
+        "<username>/<int:post_id>/comment",
+        views.add_comment,
+        name="add_comment"
+    ),
 ]
